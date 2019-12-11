@@ -2,13 +2,14 @@
 from random import choice
 from time import sleep
 from turtle import *
-pattern = []
-guesses = []
 from freegames import floor, square, vector
 import time
 
 pattern = []
 guesses = []
+colors_list=[]
+correct=True
+
 tiles = {
     vector(0, 0): ('red', 'dark red'),
     vector(0, -200): ('blue', 'dark blue'),
@@ -53,13 +54,37 @@ def tap(x,y):
 
     if tile != pattern[index]:
         print("Wrong")
-        #exit()
+        correct=False
 
     guesses.append(tile)
     flash(tile)
 
     if len(guesses) == len(pattern):
         grow()
+
+def textToList(string):
+    colors_list.clear()
+    correct=True
+    for word in string:
+        if word=="Red" or word=="red":
+            colors_list.append([100,100])
+        if word=="Blue" or word == "blue":
+            colors_list.append([100,-100])
+        if word=="Yellow" or word=="yellow":
+            colors_list.append([-100,-100])
+        if word=="Green" or word=="green":
+            colors_list.append([-100,100])
+    if len(colors_list)==len(pattern):        
+        for color in colors_list:
+            tap(color[0],color[1])
+            if correct==False:
+                break
+
+    else:
+        print("Error")
+
+def getText():
+    #here add voice recognition
 
 def start():
     "Start game."
